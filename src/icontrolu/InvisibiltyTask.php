@@ -13,7 +13,7 @@ class InvisibilityTask extends PluginTask{
         $this->p = $p;
     }
     public function onRun($tick){
-        $this->p->sendMessage("You are now longer invisible.");
+        $this->p->sendMessage("You are no longer invisible.");
         foreach(Server::getInstance()->getOnlinePlayers() as $online){
             $online->showPlayer($this->p);
         }
