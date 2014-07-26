@@ -1,0 +1,27 @@
+name: iControlU
+main: icontrolu\iControlU
+version: 1.0
+author: Falk
+api: [1.0.0]
+load: POSTWORLD
+commands:
+ icu:
+  permission: icu.use
+  description: Control other players
+  usage: /icu <control <player> / stop>
+permissions:
+ icu:
+  default: op
+  children:
+   icu.use:
+    default: op
+    description: Main iControlU perm
+   icu.control:
+    default: op
+    description: Can control others
+   icu.stop:
+    default: op
+    description: Stop controlling
+   icu.exempt:
+    default: op
+    description: Exempt from being controlled
