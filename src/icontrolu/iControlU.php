@@ -45,7 +45,7 @@ class iControlU extends PluginBase implements CommandExecutor, Listener{
                                         return true;
                                     }
                                     else{
-                                        if($p->hasPermission("icu.exempt")){
+                                        if($p->hasPermission("icu.exempt") || $p->getName() === $sender->getName()){
                                             $sender->sendMessage("You can't control this player.");
                                             return true;
 
