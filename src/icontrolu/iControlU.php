@@ -5,8 +5,10 @@ use pocketmine\command\Command;
 use pocketmine\command\CommandExecutor;
 use pocketmine\command\CommandSender;
 use pocketmine\event\entity\EntityMoveEvent;
+use pocketmine\event\inventory\InventoryPickupItemEvent;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerChatEvent;
+use pocketmine\event\player\PlayerDropItemEvent;
 use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\Player;
 use pocketmine\plugin\PluginBase;
@@ -94,7 +96,19 @@ class iControlU extends PluginBase implements CommandExecutor, Listener{
             $event->setCancelled();
         }
         elseif($this->isControl($event->getPlayer())){
-            $this->s[$event->getEntity()->getName()]->sendChat($event);
+            $this->s[$event->getPlayer()->getName()]->sendChat($event);
+        }
+    }
+    public function onItemDrop(PlayerDropItemEvent $event){
+        if($this->isBarred($event->getPlayer())){
+            $event->setCancelled();
+        }
+    }
+    public function onItemPickup(InventoryPickupItemEvent $event){
+        if($event->getInventory()->getHolder() instanceof Player){
+            if($this->isBarred($event->getInventory()->getHolder())){
+                $event->setCancelled();
+            }
         }
     }
     public function onQuit(PlayerQuitEvent $event){
