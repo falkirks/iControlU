@@ -2,7 +2,6 @@
 namespace icontrolu;
 
 use pocketmine\event\player\PlayerChatEvent;
-use pocketmine\level\Position;
 use pocketmine\Player;
 use pocketmine\Server;
 
@@ -38,7 +37,7 @@ class ControlSession{
         return $this->t;
     }
     public function updatePosition(){
-        $this->t->teleport(new Position($this->p->getX(), $this->p->getY()+1, $this->p->getZ(), $this->p->getLevel()), $this->p->yaw, $this->p->pitch);
+        $this->t->teleport($this->p->getPosition(), $this->p->yaw, $this->p->pitch);
     }
     /**
      * @param PlayerChatEvent $ev
