@@ -7,6 +7,7 @@ use pocketmine\command\CommandSender;
 use pocketmine\event\entity\EntityMoveEvent;
 use pocketmine\event\inventory\InventoryPickupItemEvent;
 use pocketmine\event\Listener;
+use pocketmine\event\player\PlayerAnimationEvent;
 use pocketmine\event\player\PlayerChatEvent;
 use pocketmine\event\player\PlayerDropItemEvent;
 use pocketmine\event\player\PlayerQuitEvent;
@@ -125,6 +126,18 @@ class iControlU extends PluginBase implements CommandExecutor, Listener{
                     break;
                 }
             }
+        }
+    }
+    public function onPlayerAnimation(PlayerAnimationEvent $event){
+        if($this->isBarred($event->getEntity())){
+            $event->setCancelled();
+        }
+        elseif($this->isControl($event->getEntity())){
+            $event->setCancelled();
+            $pk = new AnimatePacket;
+            $pk->eid = $this->s[$event->getPlayer()->getName()]->getTarget()->getID();
+            $pk->action = $event->getAnimationType();
+            $this->getServer()->broadcastPacket($this->s[$event->getPlayer()->getName()]->getTarget()->getViewers(), $pk);
         }
     }
     public function isControl(Player $p){
