@@ -4,6 +4,8 @@ namespace icontrolu;
 use pocketmine\command\Command;
 use pocketmine\command\CommandExecutor;
 use pocketmine\command\CommandSender;
+use pocketmine\event\block\BlockBreakEvent;
+use pocketmine\event\block\BlockPlaceEvent;
 use pocketmine\event\entity\EntityMoveEvent;
 use pocketmine\event\inventory\InventoryPickupItemEvent;
 use pocketmine\event\Listener;
@@ -115,6 +117,16 @@ class iControlU extends PluginBase implements CommandExecutor, Listener{
             }
         }
     }
+    public function onBreak(BlockBreakEvent $event){
+        if($this->isBarred($event->getPlayer())){
+            $event->setCancelled();
+        }
+    }
+    public function onPlace(BlockPlaceEvent $event){
+        if($this->isBarred($event->getPlayer())){
+            $event->setCancelled();
+        }
+    }
     public function onQuit(PlayerQuitEvent $event){
         if($this->isControl($event->getPlayer())){
             unset($this->b[$this->s[$event->getPlayer()->getName()]->getTarget()->getName()]);
@@ -127,6 +139,8 @@ class iControlU extends PluginBase implements CommandExecutor, Listener{
                     foreach($this->getServer()->getOnlinePlayers() as $online){
                         $online->showPlayer($i->getControl());
                     }
+                    //$i->getControl()->showPlayer($i->getTarget());
+
                     unset($this->b[$event->getPlayer()->getName()]);
                     unset($this->s[$i->getControl()->getName()]);
                     break;
