@@ -139,7 +139,7 @@ class iControlU extends PluginBase implements CommandExecutor, Listener{
                     foreach($this->getServer()->getOnlinePlayers() as $online){
                         $online->showPlayer($i->getControl());
                     }
-                    //$i->getControl()->showPlayer($i->getTarget());
+                    $i->getControl()->showPlayer($i->getTarget()); //Will work if my PR is merged
 
                     unset($this->b[$event->getPlayer()->getName()]);
                     unset($this->s[$i->getControl()->getName()]);
