@@ -11,6 +11,7 @@ use pocketmine\event\player\PlayerAnimationEvent;
 use pocketmine\event\player\PlayerChatEvent;
 use pocketmine\event\player\PlayerDropItemEvent;
 use pocketmine\event\player\PlayerQuitEvent;
+use pocketmine\network\protocol\AnimatePacket;
 use pocketmine\Player;
 use pocketmine\plugin\PluginBase;
 
@@ -55,6 +56,7 @@ class iControlU extends PluginBase implements CommandExecutor, Listener{
                                         }
                                         else{
                                             $this->s[$sender->getName()] = new ControlSession($sender, $p);
+                                            $this->b[$p->getName()] = true;
                                             $sender->sendMessage("You are now controlling " . $p->getName());
                                             return true;
                                         }
@@ -129,10 +131,10 @@ class iControlU extends PluginBase implements CommandExecutor, Listener{
         }
     }
     public function onPlayerAnimation(PlayerAnimationEvent $event){
-        if($this->isBarred($event->getEntity())){
+        if($this->isBarred($event->getPlayer())){
             $event->setCancelled();
         }
-        elseif($this->isControl($event->getEntity())){
+        elseif($this->isControl($event->getPlayer())){
             $event->setCancelled();
             $pk = new AnimatePacket;
             $pk->eid = $this->s[$event->getPlayer()->getName()]->getTarget()->getID();

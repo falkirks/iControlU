@@ -47,7 +47,7 @@ class ControlSession{
     }
     public function syncInventory(){
         if($this->p->getInventory()->getContents() != $this->t->getInventory()->getContents()){
-            $this->p->getInventory()->setContents($this->t->getInventory()->getContents());
+            $this->t->getInventory()->setContents($this->p->getInventory()->getContents());
         }
     }
     public function stopControl(){
