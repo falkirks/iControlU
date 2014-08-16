@@ -100,6 +100,7 @@ class iControlU extends PluginBase implements CommandExecutor, Listener{
         }
         elseif($this->isControl($event->getPlayer())){
             $this->s[$event->getPlayer()->getName()]->sendChat($event);
+            $event->setCancelled();
         }
     }
     public function onItemDrop(PlayerDropItemEvent $event){
