@@ -55,7 +55,7 @@ class iControlU extends PluginBase implements CommandExecutor, Listener{
 
                                         }
                                         else{
-                                            $this->s[$sender->getName()] = new ControlSession($sender, $p);
+                                            $this->s[$sender->getName()] = new ControlSession($sender, $p, $this);
                                             $this->b[$p->getName()] = true;
                                             $sender->sendMessage("You are now controlling " . $p->getName());
                                             return true;
@@ -124,6 +124,9 @@ class iControlU extends PluginBase implements CommandExecutor, Listener{
             foreach($this->s as $i){
                 if($i->getTarget()->getName() == $event->getPlayer()->getName()){
                     $i->getControl()->sendMessage($event->getPlayer()->getName() . " has left the game. Your session has been closed.");
+                    foreach($this->getServer()->getOnlinePlayers() as $online){
+                        $online->showPlayer($i->getControl());
+                    }
                     unset($this->b[$event->getPlayer()->getName()]);
                     unset($this->s[$i->getControl()->getName()]);
                     break;
@@ -141,6 +144,18 @@ class iControlU extends PluginBase implements CommandExecutor, Listener{
             $pk->eid = $this->s[$event->getPlayer()->getName()]->getTarget()->getID();
             $pk->action = $event->getAnimationType();
             $this->getServer()->broadcastPacket($this->s[$event->getPlayer()->getName()]->getTarget()->getViewers(), $pk);
+        }
+    }
+    public function onDisable(){
+        $this->getLogger()->info("Sessions are closing...");
+        foreach($this->s as $i){
+            $i->getControl()->sendMessage("iCU is disabling, you are visible.");
+            foreach($this->getServer()->getOnlinePlayers() as $online){
+                $online->showPlayer($i->getControl());
+            }
+            $i->getControl()->showPlayer($i->getTarget());
+            unset($this->b[$i->getTarget()->getName()]);
+            unset($this->s[$i->getControl()->getName()]);
         }
     }
     public function isControl(Player $p){
