@@ -17,5 +17,5 @@ Using iCU is easy: first pick a target - the player who unfortunately gets to be
 This plugin is license under the "Protected Open-Source Software License" which was written by FireBreath15. This license is shared between the MCPE and PC versions of this plugin. You can grab a copy at https://github.com/Falkirks/iControlU/blob/master/LICENSE.
 
 ##Credits
-This plugin was developed by FireBreath15 ([Bukkit](http://dev.bukkit.org/profiles/FireBreath15/), [GitHub](https://github.com/FireBreath15) and myself. FireBreath15 is the original Bukkit author so please check out his work (http://dev.bukkit.org/bukkit-plugins/icontrolu/).
+This plugin was developed by FireBreath15 ([Bukkit](http://dev.bukkit.org/profiles/FireBreath15/), [GitHub](https://github.com/FireBreath15)) and myself. FireBreath15 is the original Bukkit author so please check out his work (http://dev.bukkit.org/bukkit-plugins/icontrolu/).
 
