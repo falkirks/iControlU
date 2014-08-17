@@ -13,9 +13,6 @@ Using iCU is easy: first pick a target - the player who unfortunately gets to be
 * **icu.use** --  Use the /icu command.
 * **icu.exempt** -- players with this node cannot be controlled
 
-##Source Code
-You can view the source code on github by using the link below. If you can find a way to make the plugin run better, be sure to give a Pull Request! If you find an issue but don't know how to fix it, please create an issue so it can be resolved. Source code: Source
-
 ##License
 This plugin is license under the "Protected Open-Source Software License" which was written by FireBreath15. This license is shared between the MCPE and PC versions of this plugin. You can grab a copy at https://github.com/Falkirks/iControlU/blob/master/LICENSE.
 
