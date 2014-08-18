@@ -5,9 +5,6 @@ use pocketmine\event\player\PlayerChatEvent;
 use pocketmine\Player;
 
 class ControlSession{
-    /**
-     * @var \pocketmine\Player
-     */
     private $p, $t, $inv, $m;
     function __construct(Player $p, Player $t, iControlU $m){
         $this->p = $p;
@@ -24,24 +21,15 @@ class ControlSession{
         $this->inv = $this->p->getInventory()->getContents();
         $this->p->getInventory()->setContents($this->t->getInventory()->getContents());
     }
-    /**
-     * @return mixed
-     */
     public function getControl(){
         return $this->p;
     }
-    /**
-     * @return mixed
-     */
     public function getTarget(){
         return $this->t;
     }
     public function updatePosition(){
         $this->t->teleport($this->p->getPosition(), $this->p->yaw, $this->p->pitch);
     }
-    /**
-     * @param PlayerChatEvent $ev
-     */
     public function sendChat(PlayerChatEvent $ev){
         $this->m->getServer()->broadcastMessage(sprintf($ev->getFormat(), $this->t->getDisplayName(), $ev->getMessage()), $ev->getRecipients());
     }
