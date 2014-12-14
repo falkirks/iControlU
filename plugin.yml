@@ -1,7 +1,7 @@
 name: iControlU
 main: icontrolu\iControlU
 version: 1.3
-author: Falk
+author: Falkirks
 api: [1.6.0]
 load: POSTWORLD
 commands:
