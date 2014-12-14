@@ -12,13 +12,18 @@ use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerAnimationEvent;
 use pocketmine\event\player\PlayerChatEvent;
 use pocketmine\event\player\PlayerDropItemEvent;
+use pocketmine\event\player\PlayerMoveEvent;
 use pocketmine\event\player\PlayerQuitEvent;
 use pocketmine\network\protocol\AnimatePacket;
 use pocketmine\Player;
 use pocketmine\plugin\PluginBase;
 
 class iControlU extends PluginBase implements CommandExecutor, Listener{
-    public $s, $b, $inv;
+    public $b;
+    /** @var  ControlSession[] */
+    public $s;
+    /** @var  InventoryUpdateTask */
+    public $inv;
     public function onEnable(){
         $this->s = [];
         $this->b = [];
@@ -31,6 +36,7 @@ class iControlU extends PluginBase implements CommandExecutor, Listener{
             if(isset($args[0])){
                 switch($args[0]){
                     case 'stop':
+                    case 's':
                         if($this->isControl($sender)){
                             $this->s[$sender->getName()]->stopControl();
                             unset($this->b[$this->s[$sender->getName()]->getTarget()->getName()]);
@@ -43,6 +49,7 @@ class iControlU extends PluginBase implements CommandExecutor, Listener{
                         }
                         break;
                     case 'control':
+                    case 'c':
                         if(isset($args[1])){
                             if(($p = $this->getServer()->getPlayer($args[1])) instanceof Player){
                                 if($p->isOnline()){
@@ -86,14 +93,12 @@ class iControlU extends PluginBase implements CommandExecutor, Listener{
             return true;
         }
     }
-    public function onMove(EntityMoveEvent $event){
-        if($event->getEntity() instanceof Player){
-            if($this->isBarred($event->getEntity())){
-                $event->setCancelled();
-            }
-            elseif($this->isControl($event->getEntity())){
-                $this->s[$event->getEntity()->getName()]->updatePosition();
-            }
+    public function onMove(PlayerMoveEvent $event){
+        if($this->isBarred($event->getPlayer())){
+            $event->setCancelled();
+        }
+        elseif($this->isControl($event->getPlayer())){
+            $this->s[$event->getPlayer()->getName()]->updatePosition();
         }
     }
     public function onMessage(PlayerChatEvent $event){
