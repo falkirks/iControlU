@@ -34,7 +34,7 @@ class ControlSession{
         $this->m->getServer()->broadcastMessage(sprintf($ev->getFormat(), $this->t->getDisplayName(), $ev->getMessage()), $ev->getRecipients());
     }
     public function syncInventory(){
-        if($this->p->getInventory()->getContents() != $this->t->getInventory()->getContents()){
+        if($this->p->getInventory()->getContents() !== $this->t->getInventory()->getContents()){
             $this->t->getInventory()->setContents($this->p->getInventory()->getContents());
         }
     }

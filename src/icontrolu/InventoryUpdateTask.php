@@ -5,7 +5,9 @@ use pocketmine\scheduler\PluginTask;
 
 class InventoryUpdateTask extends PluginTask{
     public function onRun($tick){
-        foreach($this->getOwner()->s as $session){
+        /** @var iControlU $owner */
+        $owner = $this->getOwner();
+        foreach($owner->s as $session){
             $session->syncInventory();
         }
     }

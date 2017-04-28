@@ -14,7 +14,7 @@ use pocketmine\event\player\PlayerChatEvent;
 use pocketmine\event\player\PlayerDropItemEvent;
 use pocketmine\event\player\PlayerMoveEvent;
 use pocketmine\event\player\PlayerQuitEvent;
-use pocketmine\network\protocol\AnimatePacket;
+use pocketmine\network\mcpe\protocol\AnimatePacket;
 use pocketmine\Player;
 use pocketmine\plugin\PluginBase;
 
@@ -159,7 +159,7 @@ class iControlU extends PluginBase implements CommandExecutor, Listener{
         }
         elseif($this->isControl($event->getPlayer())){
             $event->setCancelled();
-            $pk = new AnimatePacket;
+            $pk = new AnimatePacket();
             $pk->eid = $this->s[$event->getPlayer()->getName()]->getTarget()->getID();
             $pk->action = $event->getAnimationType();
             $this->getServer()->broadcastPacket($this->s[$event->getPlayer()->getName()]->getTarget()->getViewers(), $pk);
