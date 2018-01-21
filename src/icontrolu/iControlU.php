@@ -31,7 +31,7 @@ class iControlU extends PluginBase implements CommandExecutor, Listener{
         $this->getServer()->getScheduler()->scheduleRepeatingTask($this->inv, 5);
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
     }
-    public function onCommand(CommandSender $sender, Command $cmd, $label, array $args){
+    public function onCommand(CommandSender $sender, Command $cmd, $label, array $args): bool{
         if($sender instanceof Player){
             if(isset($args[0])){
                 switch($args[0]){
