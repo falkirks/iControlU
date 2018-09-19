@@ -7,6 +7,7 @@ use pocketmine\command\CommandSender;
 use pocketmine\event\block\BlockBreakEvent;
 use pocketmine\event\block\BlockPlaceEvent;
 use pocketmine\event\entity\EntityMoveEvent;
+use icontrolu\InventoryUpdateTask;
 use pocketmine\event\inventory\InventoryPickupItemEvent;
 use pocketmine\event\Listener;
 use pocketmine\event\player\PlayerAnimationEvent;
@@ -24,14 +25,14 @@ class iControlU extends PluginBase implements CommandExecutor, Listener{
     public $s;
     /** @var  InventoryUpdateTask */
     public $inv;
-    public function onEnable(){
+    public function onEnable() : void{
         $this->s = [];
         $this->b = [];
         $this->inv = new InventoryUpdateTask($this);
-        $this->getServer()->getScheduler()->scheduleRepeatingTask($this->inv, 5);
+        $this->getScheduler()->scheduleRepeatingTask($this->inv, 5);
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
     }
-    public function onCommand(CommandSender $sender, Command $cmd, $label, array $args): bool{
+    public function onCommand(CommandSender $sender, Command $cmd, string $label, array $args): bool{
         if($sender instanceof Player){
             if(isset($args[0])){
                 switch($args[0]){
