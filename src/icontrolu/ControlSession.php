@@ -44,6 +44,6 @@ class ControlSession{
         /* Reveal target */
         $this->p->showPlayer($this->t);
         /* Schedule Invisibility Effect */
-        $this->m->getServer()->getScheduler()->scheduleDelayedTask(new InvisibilityTask($this->m, $this->p), 20*10);
+        $this->m->getScheduler()->scheduleDelayedTask(new InvisibilityTask($this->m, $this->p), 20*10);
     }
 }
