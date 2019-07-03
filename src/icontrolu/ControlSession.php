@@ -6,39 +6,43 @@ use pocketmine\Player;
 
 class ControlSession{
     private $p, $t, $inv, $m;
-    function __construct(Player $p, Player $t, iControlU $m){
+    function __construct(Player $p, Player $t, iControlU $m) {
         $this->p = $p;
         $this->t = $t;
         $this->m = $m;
         /* Hide from others */
-        foreach($this->m->getServer()->getOnlinePlayers() as $online){
+        foreach($m->getServer()->getOnlinePlayers() as $online){
             $online->hidePlayer($p);
         }
         /* Teleport to and hide target */
-        $this->p->hidePlayer($this->t);
-        $this->p->teleport($this->t->getPosition());
+        $p->hidePlayer($t);
+        $p->teleport($t->getPosition());
         /* Send Inventory */
-        $this->inv = $this->p->getInventory()->getContents();
-        $this->p->getInventory()->setContents($this->t->getInventory()->getContents());
+        $inv = $p->getInventory();
+        $this->inv = $inv->getContents();
+        $p->getInventory()->setContents($t->getInventory()->getContents());
     }
-    public function getControl(){
+    public function getControl(): Player{
         return $this->p;
     }
-    public function getTarget(){
+    public function getTarget(): Player{
         return $this->t;
     }
-    public function updatePosition(){
+    public function updatePosition(): void{
         $this->t->teleport($this->p->getPosition(), $this->p->yaw, $this->p->pitch);
     }
     public function sendChat(PlayerChatEvent $ev){
         $this->m->getServer()->broadcastMessage(sprintf($ev->getFormat(), $this->t->getDisplayName(), $ev->getMessage()), $ev->getRecipients());
     }
-    public function syncInventory(){
-        if($this->p->getInventory()->getContents() !== $this->t->getInventory()->getContents()){
-            $this->t->getInventory()->setContents($this->p->getInventory()->getContents());
+    public function syncInventory(): void{
+        $pContents = $this->p->getInventory()->getContents();
+        $tInventory = $this->t->getInventory();
+        $tContents = $tInventory->getContents();
+        if($pContents !== $tContents){
+            $tInventory->setContents($pContents);
         }
     }
-    public function stopControl(){
+    public function stopControl(): void{
         /* Send back inventory */
         $this->p->getInventory()->setContents($this->inv);
         /* Reveal target */

@@ -8,7 +8,7 @@ commands:
  icu:
   permission: icu.use
   description: Control other players
-  usage: /icu <control <player> / stop>
+  usage: /icu (c)ontrol <player> | (s)top
 permissions:
  icu:
   default: op
