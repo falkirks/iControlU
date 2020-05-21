@@ -88,11 +88,11 @@ class iControlU extends PluginBase implements CommandExecutor, Listener{
                         break;
                 }
             }
-        }
-        else{
+        }else{
             $sender->sendMessage("Please run command in game.");
             return true;
         }
+        return true;
     }
     public function onMove(PlayerMoveEvent $event){
         if($this->isBarred($event->getPlayer())){
