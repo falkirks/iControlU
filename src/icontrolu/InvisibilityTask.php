@@ -4,6 +4,7 @@ namespace icontrolu;
 use pocketmine\Player;
 use pocketmine\plugin\Plugin;
 use pocketmine\scheduler\Task;
+use pocketmine\Server;
 
 class InvisibilityTask extends Task{
     private $p;
@@ -12,7 +13,7 @@ class InvisibilityTask extends Task{
     }
     public function onRun(int $tick) : void{
         $this->p->sendMessage("You are no longer invisible.");
-        foreach($this->getOwner()->getServer()->getOnlinePlayers() as $online){
+        foreach(Server::getInstance()->getOnlinePlayers() as $online){
             $online->showPlayer($this->p);
         }
     }
